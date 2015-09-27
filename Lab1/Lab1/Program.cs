@@ -18,26 +18,73 @@ namespace Lab1
 
             var del = new MyDelegat<Child>(Parent.DoubleSum); //контрвариативность
             del(c1, c2);
-            
+
             Separate();
             del = c1.SuperSum;
             del.Invoke(c1, c2);
-            
+
             Separate();
             del += c1.Sum;
             del += c2.SuperSum;
             del(c1, c2);
 
             Separate();
-            del = (MyDelegat<Child>)Delegate.Remove(del, new MyDelegat<Child>(c1.Sum));
-            
-            Separate();
+            del -= c1.Sum;
             del(c1, c2);
+
+            Separate();
+            var m1 = new My(1);
+            var m2 = new My();
+            var m3 = new My(3);
+            Func<int> myDel = m1.Print;
+            myDel += m2.Print;
+            myDel += m3.Print;
+            try
+            {
+                Console.WriteLine(myDel());
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("Произошла ошибка.");
+            }
+
+            Separate();
+            foreach (var i in myDel.GetInvocationList().Cast<Func<int>>())
+            {
+                try
+                {
+                    Console.WriteLine(i());
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine("Произошла ошибка.");
+                }
+            }
         }
 
         static void Separate()
         {
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        }
+
+    }
+
+    class My
+    {
+        private readonly int _a;
+
+        public int Print()
+        {
+            if (_a == 0)
+                throw new ArgumentException();
+            return _a;
+        }
+
+        public My() { }
+
+        public My(int a)
+        {
+            _a = a;
         }
     }
 }
