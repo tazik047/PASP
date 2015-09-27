@@ -36,6 +36,9 @@ namespace Lab1
             var m1 = new My(1);
             var m2 = new My();
             var m3 = new My(3);
+            m1.MyEvent +=Action_MyEvent;
+            m2.MyEvent +=Action_MyEvent;
+            m3.MyEvent +=Action_MyEvent;
             Func<int> myDel = m1.Print;
             myDel += m2.Print;
             myDel += m3.Print;
@@ -62,6 +65,11 @@ namespace Lab1
             }
         }
 
+        static void Action_MyEvent(object sender, int e)
+        {
+            Console.WriteLine("MyEvent - {0}", e);
+        }
+
         static void Separate()
         {
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -73,10 +81,13 @@ namespace Lab1
     {
         private readonly int _a;
 
+        public event EventHandler<int> MyEvent;
+
         public int Print()
         {
             if (_a == 0)
                 throw new ArgumentException();
+            Action();
             return _a;
         }
 
@@ -85,6 +96,12 @@ namespace Lab1
         public My(int a)
         {
             _a = a;
+        }
+
+        private void Action()
+        {
+            if (MyEvent != null)
+                MyEvent(this, _a);
         }
     }
 }
