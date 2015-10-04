@@ -11,9 +11,11 @@ namespace PZ1
     {
         static void Main(string[] args)
         {
-            AppDomain domain1 = AppDomain.CreateDomain("first", null);
-            var t = domain1.CreateInstance("ClassLibrary", "Point");
-            
+            var p1 = new Point(0, 0);
+            var p2 = new Point(10, 0);
+            var math = new Math();
+            Console.WriteLine("Length = {0}", math.Length(p1, p2));
+            Console.WriteLine("Middle = {0}", math.Middle(p1,p2));
         }
     }
 }
