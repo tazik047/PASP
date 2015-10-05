@@ -26,6 +26,8 @@ namespace Lab1
             Separate();
             del += c1.Sum;
             del += c2.SuperSum;
+            del += c1.Sum;
+            del += c2.SuperSum;
             del(c1, c2);
 
             Separate();
