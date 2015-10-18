@@ -116,8 +116,8 @@ namespace Domains
 
             Console.WriteLine("Time for access to valObject: {0} ms\n", sw.ElapsedMilliseconds);
 
-            Console.WriteLine("SizeOf domain1: " + domain1.MonitoringTotalAllocatedMemorySize);
-            Console.WriteLine("SizeOf domain2: " + domain2.MonitoringTotalAllocatedMemorySize);
+            Console.WriteLine("SizeOf domain1: {0} kb", domain1.MonitoringTotalAllocatedMemorySize/1024.0);
+            Console.WriteLine("SizeOf domain2: {0} kb", domain2.MonitoringTotalAllocatedMemorySize/1024.0);
         }
 
         static void domain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
